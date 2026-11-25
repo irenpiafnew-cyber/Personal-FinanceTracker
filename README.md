@@ -12,3 +12,6 @@
 | План контенту | «попроси content-strategist зробити план на тиждень» |
 
 Агенти — у `.claude/agents/`, скіли — у `.claude/skills/`, гайд зі скілів — `docs/YAK-PYSATY-SKILY.md`.
+
+## Проєкти
+- [Портфоліо Ірини](projects/sites/iryna-portfolio/index.html): лавандовий лендінг зі склом, горизонтальним скролом і брифом у модалці
