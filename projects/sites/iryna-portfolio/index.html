@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ірина — сайти, ролики, аватари</title>
+<meta name="description" content="Створюю преміальні сайти, короткі відео для TikTok і YouTube Shorts та AI-аватари для брендів.">
+<meta property="og:title" content="Ірина — сайти, ролики, аватари">
+<meta property="og:description" content="Преміальні сайти, короткі відео та AI-аватари, які запам'ятовують.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%237c5cff'/><text x='50' y='68' font-size='54' text-anchor='middle' fill='white' font-family='serif' font-style='italic'>І</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3fb; --fg:#1a1528; --muted:#6c6580; --accent:#7c5cff; --accent-2:#ff8fb1;
+    --card:color-mix(in oklab, var(--bg) 55%, transparent);
+    --line:color-mix(in oklab, var(--fg) 12%, transparent);
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0f0c18; --fg:#f1edfb; --muted:#a39cba; --accent:#9d85ff; }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;overflow-x:clip}
+  body{background:var(--bg);color:var(--fg);font:400 1.05rem/1.65 Manrope,system-ui,sans-serif;overflow-x:clip}
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit}
+  h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:.95;letter-spacing:-.02em}
+  em{font-style:italic;font-weight:500;color:var(--accent)}
+  .wrap{padding-inline:max(16px,6vw)}
+  .eyebrow{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+  /* ---------- Скло ---------- */
+  .glass{
+    background:var(--card);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 rgb(255 255 255 / .35),0 10px 30px rgb(20 10 50 / .10);
+  }
+  @supports not (backdrop-filter:blur(1px)){.glass{background:var(--bg)}}
+  @media (prefers-reduced-transparency: reduce){.glass{background:var(--bg);backdrop-filter:none}}
+
+  /* ---------- Меню ---------- */
+  .nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:clamp(.8rem,2.5vw,2rem);
+       padding:.55rem .6rem .55rem 1.2rem;border-radius:999px;white-space:nowrap;font-size:.95rem;font-weight:500}
+  .nav a{text-decoration:none}
+  .nav .logo{font-family:"Playfair Display",serif;font-style:italic;font-size:1.25rem}
+  .nav .links{display:flex;gap:clamp(.8rem,2vw,1.6rem)}
+  .nav .links a{opacity:.75;transition:opacity .3s}
+  .nav .links a:hover{opacity:1}
+  @media (max-width:560px){.nav .links{display:none}}
+
+  /* ---------- Кнопки ---------- */
+  .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.6rem;min-height:48px;padding:.85rem 1.6rem;border-radius:999px;
+       border:0;cursor:pointer;font:700 1rem Manrope,sans-serif;text-decoration:none;background:var(--fg);color:var(--bg);
+       transition:transform .5s var(--ease)}
+  .btn.small{min-height:40px;padding:.55rem 1.1rem;font-size:.9rem}
+  .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .btn::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+       background:radial-gradient(120px circle at var(--x,50%) var(--y,50%),rgb(255 255 255 / .35),transparent 60%)}
+  .btn:hover::after{opacity:1}
+  .btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;min-height:100svh;display:grid;align-content:center;gap:2rem;padding-block:120px 60px;isolation:isolate;overflow:clip}
+  .blob{position:absolute;z-index:-1;border-radius:50%;filter:blur(60px);opacity:.75;will-change:transform}
+  .blob.a{width:42vmax;height:42vmax;background:var(--accent);top:-12vmax;right:-10vmax}
+  .blob.b{width:30vmax;height:30vmax;background:var(--accent-2);bottom:-8vmax;left:-8vmax;opacity:.55}
+  .blob.c{width:18vmax;height:18vmax;background:#7fd8ff;top:40%;left:45%;opacity:.35}
+  .hero h1{font-size:clamp(2.5rem,10.4vw,10.5rem)}
+  .hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em}
+  .hero h1 .line > span{display:inline-block}
+  .hero p.lead{max-width:34ch;font-size:clamp(1.1rem,2vw,1.4rem);color:var(--muted)}
+  .hero .row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  @media (max-width:420px){.hero .row .btn{padding-inline:1.2rem}}
+  .badge{display:inline-flex;align-items:center;gap:.6rem;padding:.45rem .9rem;border-radius:999px;font-size:.85rem;font-weight:500;width:max-content}
+  .badge i{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 4px rgb(61 220 132 / .2)}
+
+  /* ---------- Біжучий рядок ---------- */
+  .marquee{border-block:1px solid var(--line);overflow:hidden;padding-block:1.4rem}
+  .marquee .track{display:flex;gap:3rem;width:max-content;animation:run 28s linear infinite;
+       font-family:"Playfair Display",serif;font-size:clamp(1.8rem,4vw,3.2rem);font-style:italic}
+  .marquee span::after{content:"✦";font-style:normal;color:var(--accent);margin-left:3rem;font-size:.6em;vertical-align:middle}
+  @keyframes run{to{transform:translateX(-50%)}}
+
+  /* ---------- Секції ---------- */
+  section.block{padding-block:clamp(80px,14vh,160px)}
+  .head{display:grid;gap:1rem;margin-bottom:clamp(2.5rem,6vw,4.5rem);max-width:900px}
+  .head h2{font-size:clamp(2.4rem,6.5vw,5.5rem)}
+
+  /* ---------- Напрями ---------- */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(12px,2vw,24px)}
+  .card{position:relative;overflow:hidden;border-radius:28px;padding:clamp(1.6rem,3vw,2.4rem);min-height:380px;display:flex;flex-direction:column;gap:1rem;
+        background:color-mix(in oklab,var(--fg) 4%,var(--bg));border:1px solid var(--line);transition:transform .6s var(--ease)}
+  .card:hover{transform:translateY(-6px)}
+  .card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+        background:radial-gradient(400px circle at var(--x,50%) var(--y,50%),color-mix(in oklab,var(--accent) 22%,transparent),transparent 60%)}
+  .card:hover::before{opacity:1}
+  .card .num{font-family:"Playfair Display",serif;font-style:italic;color:var(--accent);font-size:1.1rem}
+  .card h3{font-size:clamp(2rem,3.2vw,2.6rem)}
+  .card p{color:var(--muted)}
+  .card ul{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto}
+  .card li{font-size:.85rem;padding:.35rem .8rem;border-radius:999px;border:1px solid var(--line)}
+  .art{height:110px;position:relative}
+  .art.site span{position:absolute;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
+  .art.site span:nth-child(1){inset:0 30% 20px 0}
+  .art.site span:nth-child(2){inset:22px 8% 0 26%;background:var(--accent);opacity:.85}
+  .art.video{display:flex;gap:10px}
+  .art.video span{flex:0 0 62px;height:110px;border-radius:12px;background:linear-gradient(160deg,var(--accent),var(--accent-2))}
+  .art.video span:nth-child(2){opacity:.6;transform:translateY(10px)}
+  .art.video span:nth-child(3){opacity:.3;transform:translateY(20px)}
+  .art.avatar span{position:absolute;width:96px;height:96px;border-radius:50%;
+       background:radial-gradient(circle at 35% 30%,#fff 0 8%,transparent 9%),radial-gradient(circle at 50% 40%,var(--accent-2),var(--accent))}
+  .art.avatar span:nth-child(2){left:64px;opacity:.55;filter:hue-rotate(60deg)}
+  .art.avatar span:nth-child(3){left:128px;opacity:.3;filter:hue-rotate(120deg)}
+
+  /* ---------- Процес (горизонтальний скрол) ---------- */
+  .process{overflow:hidden}
+  .steps{display:flex;gap:clamp(12px,2vw,24px);width:max-content;padding-inline:max(16px,6vw)}
+  .step{width:min(78vw,440px);min-height:320px;border-radius:28px;padding:2.2rem;display:flex;flex-direction:column;justify-content:space-between}
+  .step b{font-family:"Playfair Display",serif;font-size:clamp(4rem,8vw,6.5rem);line-height:1;color:var(--accent);font-style:italic;font-weight:500}
+  .step h3{font-size:2rem;margin-bottom:.6rem}
+  .step p{color:var(--muted)}
+  .process-bg{position:relative;isolation:isolate;overflow:clip}
+  .process-bg::before{content:"";position:absolute;z-index:-1;width:50vmax;height:30vmax;left:20%;top:30%;border-radius:50%;
+       background:linear-gradient(90deg,var(--accent),var(--accent-2));filter:blur(80px);opacity:.35}
+  @media (max-width:760px){
+    .steps{width:auto;flex-direction:column}
+    .step{width:auto;min-height:auto;gap:1.5rem}
+  }
+
+  /* ---------- Цитата ---------- */
+  .quote{font-family:"Playfair Display",serif;font-size:clamp(2rem,5.5vw,4.6rem);line-height:1.1;max-width:18ch}
+  .quote .w{opacity:.15;transition:opacity .2s}
+
+  /* ---------- CTA ---------- */
+  .cta{text-align:center;display:grid;justify-items:center;gap:1.6rem;padding-block:clamp(100px,18vh,200px);position:relative;isolation:isolate;overflow:hidden}
+  .cta h2{font-size:clamp(3rem,11vw,10rem)}
+  .cta .blob{width:40vmax;height:40vmax;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.4}
+  .magnetic{transition:transform .4s var(--ease)}
+
+  footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding-block:2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+  footer nav{display:flex;gap:1.2rem}
+
+  /* ---------- Модалка ---------- */
+  dialog{margin:auto;width:min(92vw,480px);border-radius:28px;padding:2rem;color:var(--fg)}
+  dialog::backdrop{background:rgb(15 10 30 / .45);backdrop-filter:blur(4px)}
+  dialog[open]{animation:pop .4s var(--ease)}
+  @keyframes pop{from{opacity:0;transform:translateY(20px) scale(.96)}}
+  dialog h2{font-size:2.2rem;margin-bottom:.4rem}
+  dialog p{color:var(--muted);margin-bottom:1.4rem}
+  .field{display:grid;gap:.35rem;margin-bottom:1rem;font-size:.9rem;font-weight:500}
+  .field input,.field select,.field textarea{font:inherit;font-weight:400;color:var(--fg);background:color-mix(in oklab,var(--bg) 70%,transparent);
+       border:1px solid var(--line);border-radius:14px;padding:.8rem 1rem;min-height:48px}
+  .field textarea{min-height:96px;resize:vertical}
+  .dialog-actions{display:flex;gap:.6rem;justify-content:flex-end;flex-wrap:wrap;margin-top:1.4rem}
+  .x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font-size:1.2rem;cursor:pointer}
+
+  /* ---------- Reveal ---------- */
+  .js .reveal{opacity:0;transform:translateY(40px)}
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{opacity:1;transform:none}
+    .marquee .track{animation:none}
+    .quote .w{opacity:1}
+    dialog[open]{animation:none}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<nav class="nav glass" aria-label="Головне меню">
+  <a class="logo" href="#top">Ірина</a>
+  <div class="links"><a href="#work">Напрями</a><a href="#process">Процес</a><a href="#contact">Контакт</a></div>
+  <button class="btn small" data-open="brief">Обговорити</button>
+</nav>
+
+<main id="top">
+  <!-- HERO -->
+  <header class="hero wrap">
+    <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+    <span class="badge glass reveal"><i></i>Відкрита до нових проєктів</span>
+    <h1 aria-label="Створюю, що запам'ятовують">
+      <span class="line"><span>Створюю,</span></span>
+      <span class="line"><span>те, що</span></span>
+      <span class="line"><span><em>запам'ятовують</em></span></span>
+    </h1>
+    <p class="lead reveal">Преміальні сайти, короткі відео для TikTok і Shorts та AI-аватари, з якими бренд виглядає дорого й живо.</p>
+    <div class="row reveal">
+      <button class="btn magnetic" data-open="brief">Розпочати проєкт →</button>
+      <a class="btn ghost" href="#work">Що я роблю</a>
+    </div>
+  </header>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Преміальні сайти</span><span>YouTube Shorts</span><span>TikTok</span><span>AI-аватари</span><span>Анімації</span>
+      <span>Преміальні сайти</span><span>YouTube Shorts</span><span>TikTok</span><span>AI-аватари</span><span>Анімації</span>
+    </div>
+  </div>
+
+  <!-- НАПРЯМИ -->
+  <section id="work" class="block wrap">
+    <div class="head">
+      <span class="eyebrow reveal">Напрями</span>
+      <h2 class="reveal">Три способи <em>зупинити</em> скрол</h2>
+    </div>
+    <div class="cards">
+      <article class="card reveal">
+        <div class="art site" aria-hidden="true"><span></span><span></span></div>
+        <span class="num">01</span>
+        <h3>Сайти</h3>
+        <p>Лендінги й портфоліо з плавними анімаціями, скляними ефектами й увагою до кожного пікселя. Ідеально працюють на телефоні.</p>
+        <ul><li>Лендінг</li><li>Портфоліо</li><li>Промо</li></ul>
+      </article>
+      <article class="card reveal">
+        <div class="art video" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="num">02</span>
+        <h3>Ролики</h3>
+        <p>Сценарії, хуки на перші 2 секунди, розкадровки й субтитри для TikTok, YouTube Shorts і Reels.</p>
+        <ul><li>Сценарій</li><li>Хуки</li><li>Монтаж-план</li></ul>
+      </article>
+      <article class="card reveal">
+        <div class="art avatar" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="num">03</span>
+        <h3>Аватари</h3>
+        <p>Персонажі бренду та AI-ведучі, що виглядають однаково в кожному кадрі: від аватарки до говорячого відео.</p>
+        <ul><li>Аватарка</li><li>Маскот</li><li>AI-ведучий</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ПРОЦЕС -->
+  <section id="process" class="block process process-bg">
+    <div class="head wrap">
+      <span class="eyebrow reveal">Процес</span>
+      <h2 class="reveal">Від ідеї до <em>вау</em> за 4 кроки</h2>
+    </div>
+    <div class="steps">
+      <div class="step glass"><b>01</b><div><h3>Бриф</h3><p>Короткий дзвінок: хто ваша аудиторія, який настрій бренду і що має статися після перегляду.</p></div></div>
+      <div class="step glass"><b>02</b><div><h3>Концепція</h3><p>Палітра, шрифти, структура та один «вау-момент». Ви бачите напрям ще до першого рядка коду.</p></div></div>
+      <div class="step glass"><b>03</b><div><h3>Створення</h3><p>Дизайн, анімації, сценарій чи аватар. Показую проміжні версії, щоб ви могли скоригувати курс.</p></div></div>
+      <div class="step glass"><b>04</b><div><h3>Запуск</h3><p>Публікація, перевірка на телефонах і поради, як розвивати проєкт далі.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ЦИТАТА -->
+  <section class="block wrap">
+    <p class="quote" id="quote">Преміально — це коли кожна деталь має причину бути на своєму місці.</p>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="cta wrap">
+    <div class="blob a"></div>
+    <span class="eyebrow">Контакт</span>
+    <h2>Створимо <em>разом?</em></h2>
+    <p class="lead" style="color:var(--muted);max-width:40ch">Розкажіть про ідею, і я запропоную концепцію протягом 48 годин.</p>
+    <button class="btn magnetic" data-open="brief">Заповнити бриф →</button>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Ірина</span>
+  <!-- TODO: заміни посилання на свої акаунти -->
+  <nav aria-label="Соцмережі"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></nav>
+</footer>
+
+<!-- Модалка-бриф -->
+<dialog id="brief" class="glass" aria-labelledby="brief-title">
+  <form method="dialog" id="brief-form">
+    <button class="x" value="cancel" aria-label="Закрити" formnovalidate>✕</button>
+    <h2 id="brief-title">Бриф</h2>
+    <p>Три питання, і я зрозумію, з чого почати.</p>
+    <label class="field">Ваше ім'я<input name="name" required autocomplete="name"></label>
+    <label class="field">Що потрібно
+      <select name="type"><option>Сайт</option><option>Ролик</option><option>Аватар</option><option>Все разом</option></select>
+    </label>
+    <label class="field">Коротко про ідею<textarea name="idea" placeholder="Наприклад: лендінг для студії йоги, спокійний і дорогий"></textarea></label>
+    <div class="dialog-actions">
+      <button class="btn ghost" value="cancel" formnovalidate>Скасувати</button>
+      <button class="btn" value="send">Надіслати</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+
+  // Модалка
+  const dlg = document.getElementById('brief');
+  document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => dlg.showModal()));
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); }); // клік по фону
+  dlg.addEventListener('close', () => {
+    if (dlg.returnValue === 'send') {
+      // TODO: підключити реальну відправку (Formspree / Telegram-бот / Supabase)
+      alert('Дякую! Я відповім протягом 48 годин.');
+      document.getElementById('brief-form').reset();
+    }
+  });
+
+  // Відблиск за курсором на кнопках і картках
+  document.querySelectorAll('.btn, .card').forEach(el => el.addEventListener('pointermove', e => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--x', `${e.clientX - r.left}px`);
+    el.style.setProperty('--y', `${e.clientY - r.top}px`);
+  }));
+
+  // Цитата: слова «загоряються» при скролі
+  const q = document.getElementById('quote');
+  q.innerHTML = q.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+
+  if (reduce || !window.gsap) {
+    document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Плавний скрол
+  if (window.Lenis) {
+    const lenis = new Lenis({ lerp: .1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+      const id = a.getAttribute('href'); if (id.length < 2) return;
+      e.preventDefault(); lenis.scrollTo(id, { offset: -20 });
+    }));
+  }
+
+  // Hero: рядки виїжджають знизу
+  gsap.from('.hero h1 .line > span', { yPercent: 110, duration: 1.3, ease: 'expo.out', stagger: .12, delay: .1 });
+
+  // Плями повільно дихають і рухаються від скролу
+  gsap.to('.hero .blob.a', { x: -60, y: 40, scale: 1.1, duration: 8, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  gsap.to('.hero .blob.b', { x: 50, y: -30, duration: 10, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  gsap.to('.hero .blob', { yPercent: 30, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+  // Reveal
+  gsap.utils.toArray('.reveal').forEach(el => gsap.to(el, {
+    opacity: 1, y: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' }
+  }));
+
+  // Цитата
+  gsap.to('#quote .w', { opacity: 1, stagger: .1, ease: 'none',
+    scrollTrigger: { trigger: '#quote', start: 'top 80%', end: 'bottom 45%', scrub: true } });
+
+  // Горизонтальний скрол процесу — лише на широких екранах
+  ScrollTrigger.matchMedia({
+    '(min-width: 761px)': () => {
+      const steps = document.querySelector('.steps');
+      gsap.to(steps, {
+        x: () => -(steps.scrollWidth - innerWidth), ease: 'none',
+        scrollTrigger: { trigger: '.process', start: 'top top', end: () => '+=' + (steps.scrollWidth - innerWidth),
+                         pin: true, scrub: 1, invalidateOnRefresh: true }
+      });
+    }
+  });
+
+  // Магнітні кнопки (тільки мишка)
+  if (fine) document.querySelectorAll('.magnetic').forEach(b => {
+    b.addEventListener('pointermove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px, ${(e.clientY - r.top - r.height / 2) * .35}px)`;
+    });
+    b.addEventListener('pointerleave', () => b.style.transform = '');
+  });
+
+  const debounce = (fn, ms = 200) => { let t; return () => { clearTimeout(t); t = setTimeout(fn, ms); }; };
+  addEventListener('resize', debounce(() => ScrollTrigger.refresh()));
+})();
+</script>
+</body>
+</html>
