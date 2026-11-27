@@ -1,0 +1,51 @@
+// Усі тексти сайту в одному місці — легко правити й перекладати.
+// ВАЖЛИВО: тут немає цін, рейтингів, відгуків і цифр «досвіду» — їх має підтвердити компанія.
+
+export const SERVICES = [
+  {
+    id: "domy",
+    title: "Domy i mieszkania",
+    lead: "Regularne lub jednorazowe sprzątanie Twojego domu.",
+    tone: "light",
+    image: null as string | null, // TODO: assets/service-<id>.webp
+  },
+  {
+    id: "okna",
+    title: "Mycie okien",
+    lead: "Okna, ramy i parapety bez smug.",
+    tone: "yellow",
+    image: null as string | null, // TODO: assets/service-<id>.webp
+  },
+  {
+    id: "biura",
+    title: "Biura i lokale",
+    lead: "Czyste miejsce pracy dla zespołu i klientów.",
+    tone: "dark",
+    image: null as string | null, // TODO: assets/service-<id>.webp
+  },
+  {
+    id: "generalne",
+    title: "Sprzątanie generalne",
+    lead: "Gruntowne sprzątanie od podłogi po sufit.",
+    tone: "light",
+    image: null as string | null, // TODO: assets/service-<id>.webp
+  },
+] as const;
+
+export type ServiceId = (typeof SERVICES)[number]["id"];
+
+export const MARQUEE_WORDS = ["Czystość", "Świeżość", "Komfort", "Ravita"];
+
+export const STEPS = [
+  { title: "Wybierz usługę", text: "Zaznacz, czego potrzebujesz — dom, okna, biuro albo sprzątanie generalne." },
+  { title: "Zapytaj o wycenę", text: "Podaj metraż i miejscowość. Wycena zależy od zakresu prac." },
+  { title: "Ustal termin", text: "Wybierz dzień, który Ci odpowiada. Potwierdzimy go telefonicznie." },
+  { title: "Ciesz się czystością", text: "My sprzątamy, a Ty masz czas na to, co naprawdę ważne." },
+];
+
+export const NAV = [
+  { href: "#uslugi", label: "Usługi" },
+  { href: "#o-nas", label: "O nas" },
+  { href: "#cennik", label: "Cennik" },
+  { href: "#kontakt", label: "Kontakt" },
+];
