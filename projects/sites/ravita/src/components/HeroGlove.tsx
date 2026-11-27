@@ -7,10 +7,10 @@ import type { CSSProperties } from "react";
  * Фінальний файл — PNG/WebP з прозорим фоном: покладіть у public/assets/hero-glove.webp,
  * змініть GLOVE_SRC і вимкніть TEMP_BLEND — анімації лишаться без змін.
  */
-const GLOVE_SRC = "assets/hero-glove-temp.webp";
+export const GLOVE_SRC = "assets/hero-glove-temp.webp";
 // Тимчасове фото має білий фон → mix-blend-mode: multiply робить білий «прозорим».
 // Для фінального PNG з альфа-каналом: TEMP_BLEND = false.
-const TEMP_BLEND = true;
+export const TEMP_BLEND = true;
 // М'яко гасимо краї тимчасового фото, щоб не було видно прямокутника
 const TEMP_MASK =
   "linear-gradient(to right, transparent, #000 14%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 82%, transparent)";
