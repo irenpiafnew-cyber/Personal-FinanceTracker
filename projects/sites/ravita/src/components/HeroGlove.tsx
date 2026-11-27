@@ -3,26 +3,20 @@ import type { CSSProperties } from "react";
 /**
  * Рукавичка + губка + піна, краплі та бульбашки.
  *
- * ТИМЧАСОВИЙ РЕСУРС: hero-glove-temp.webp вирізано з референсу (на білому фоні).
- * Фінальний файл — PNG/WebP з прозорим фоном: покладіть у public/assets/hero-glove.webp,
- * змініть GLOVE_SRC і вимкніть TEMP_BLEND — анімації лишаться без змін.
+ * Фото — PNG з прозорим фоном (AI-згенероване, ілюстративне), очищене від рожевого ореолу
+ * та стиснуте у WebP. Щоб замінити: покласти новий файл у public/assets і оновити GLOVE (src, w, h, drops).
  */
-export const GLOVE_SRC = "assets/hero-glove-temp.webp";
-// Тимчасове фото має білий фон → mix-blend-mode: multiply робить білий «прозорим».
-// Для фінального PNG з альфа-каналом: TEMP_BLEND = false.
-export const TEMP_BLEND = true;
-// М'яко гасимо краї тимчасового фото, щоб не було видно прямокутника
-const TEMP_MASK =
-  "linear-gradient(to right, transparent, #000 14%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 82%, transparent)";
+// Обраний варіант (v2). x/y крапель — кінчики патьоків піни у % картинки: звідти падають анімовані краплі.
+const GLOVE = {
+  src: "assets/hero-glove.webp",
+  srcSmall: "assets/hero-glove-960.webp", // для телефонів — у 3 рази легший
+  w: 1841,
+  h: 1365,
+  drops: [{ x: 20, y: 88 }, { x: 32, y: 84 }, { x: 39, y: 87 }],
+};
 
-// Краплі під губкою: x/y у % контейнера, тривалість і затримка різні — щоб не падали «хором»
-const DROPS = [
-  { x: 33, y: 78, d: 3.2, l: 0.2, s: 9, f: 220 },
-  { x: 44, y: 84, d: 3.8, l: 1.4, s: 12, f: 260 },
-  { x: 55, y: 81, d: 2.9, l: 2.3, s: 8, f: 200 },
-  { x: 62, y: 86, d: 4.2, l: 0.8, s: 10, f: 240 },
-  { x: 39, y: 82, d: 3.5, l: 3.1, s: 7, f: 180 },
-];
+// Анімовані краплі: різна тривалість і затримка — щоб не падали «хором»
+const DROPS = GLOVE.drops.map((p, i) => ({ ...p, d: [3.2, 3.8, 2.9][i % 3], l: [0.2, 1.4, 2.3][i % 3], s: [9, 12, 8][i % 3], f: [220, 260, 200][i % 3] }));
 
 // Мильні бульбашки
 const BUBBLES = [
@@ -36,20 +30,20 @@ const BUBBLES = [
 
 export function HeroGlove() {
   return (
-    // Корінь БЕЗ transform/z-index: інакше multiply змішувався б лише сам із собою.
     // Фото й краплі — два шари з однаковою анімацією, тож рухаються синхронно.
-    <div className="relative aspect-[1066/588] w-full" aria-hidden="true">
-      <div className="glove-enter absolute inset-0" style={TEMP_BLEND ? { mixBlendMode: "multiply" } : undefined}>
+    <div className="relative w-full" style={{ aspectRatio: `${GLOVE.w} / ${GLOVE.h}` }} aria-hidden="true">
+      <div className="glove-enter absolute inset-0">
         <div className="glove-float h-full w-full">
           <img
-            src={GLOVE_SRC}
+            src={GLOVE.src}
+            srcSet={`${GLOVE.srcSmall} 960w, ${GLOVE.src} ${GLOVE.w}w`}
+            sizes="(min-width: 1024px) 64vw, 100vw"
             alt=""
-            width={1066}
-            height={588}
+            width={GLOVE.w}
+            height={GLOVE.h}
             fetchPriority="high"
             decoding="async"
             className="pointer-events-none h-full w-full select-none object-contain"
-            style={TEMP_BLEND ? { maskImage: TEMP_MASK, WebkitMaskImage: TEMP_MASK, maskComposite: "intersect", WebkitMaskComposite: "source-in" } : undefined}
           />
         </div>
       </div>

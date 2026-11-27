@@ -61,7 +61,7 @@ export function Header({ paused, onTogglePause }: { paused: boolean; onTogglePau
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
             )}
           </button>
-          <a href="#kontakt" className="btn-sun hidden min-h-11! sm:inline-flex">
+          <a href="#kontakt" className="btn-sun hidden min-h-11! ring-2 ring-white sm:inline-flex">
             Zamów <ArrowUpRight />
           </a>
           <button

@@ -1,5 +1,5 @@
 import type { ServiceId } from "../content/pl";
-import { HeroGlove, TEMP_BLEND } from "./HeroGlove";
+import { HeroGlove } from "./HeroGlove";
 import { QuickQuote } from "./QuickQuote";
 
 /**
@@ -25,9 +25,9 @@ export function Hero({ onQuote }: { onQuote: (s: ServiceId, area: string) => voi
           </p>
         </div>
 
-        {/* Рукавичка: телефон — у потоці; desktop — праворуч, перекриває «ravita.».
-            Тимчасове фото (multiply) лежить під текстом; справжній PNG з прозорістю — над ним (z-20). */}
-        <div className={`relative ${TEMP_BLEND ? "" : "z-20"} -mx-4 mt-4 sm:mx-0 lg:absolute lg:right-[14%] lg:top-[2%] lg:mt-0 lg:w-[54%]`}>
+        {/* Рукавичка: телефон — у потоці; desktop — притиснута до правого й верхнього краю вікна
+            (рукав «виходить» за екран, як у макеті) і перекриває «ravita.». */}
+        <div className={`relative z-20 -mx-4 mt-4 sm:mx-0 lg:absolute lg:-top-28 lg:right-[calc((100%-100vw)/2)] lg:mt-0 lg:w-[64vw] lg:max-w-[1180px]`}>
           <HeroGlove />
         </div>
 

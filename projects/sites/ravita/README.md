@@ -35,12 +35,12 @@ npm run preview   # перегляд зібраної версії
 
 | Ресурс | Куди покласти | Що змінити в коді |
 |---|---|---|
-| Рукавичка з губкою, **PNG/WebP з прозорим фоном**, ≥ 2000 px завширшки | `public/assets/hero-glove.webp` | у `HeroGlove.tsx`: `GLOVE_SRC` і `TEMP_BLEND = false` |
+| ✅ Рукавичка (готово, AI-згенерована, варіант 2) | `public/assets/hero-glove.webp` + `hero-glove-960.webp` | для заміни: об'єкт `GLOVE` у `HeroGlove.tsx` |
 | 4 фото послуг, 4:5, ≥ 900×1125 | `public/assets/service-<id>.webp` (`domy`, `okna`, `biura`, `generalne`) | у `content/pl.ts`: `image: "assets/service-domy.webp"` |
 | Чисте вікно / вид за склом, 16:9, ≥ 2000 px | `public/assets/window-clean.webp` | у `CleaningDemo.tsx`: `CLEAN_PHOTO` |
 | Реальні роботи компанії | галерея | лише справжні фото від Ravita, **без AI** |
 
-Зараз у hero стоїть **тимчасовий** кроп із референсу MolfarWeb, змішаний із білим фоном через `mix-blend-mode: multiply`.
+Рукавичку очищено від рожевого ореолу (артефакт видалення фону) і обрізано по контуру. Це ілюстрація, а не фото реальної роботи компанії.
 
 ### Промпти (Midjourney / Flux)
 
