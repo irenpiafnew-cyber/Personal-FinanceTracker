@@ -7,28 +7,28 @@ export const SERVICES = [
     title: "Domy i mieszkania",
     lead: "Regularne lub jednorazowe sprzątanie Twojego domu.",
     tone: "light",
-    image: null as string | null, // TODO: assets/service-<id>.webp
+    image: "assets/services/domy.webp" as string | null, // AI-ілюстрація (не фото робіт)
   },
   {
     id: "okna",
     title: "Mycie okien",
     lead: "Okna, ramy i parapety bez smug.",
     tone: "yellow",
-    image: null as string | null, // TODO: assets/service-<id>.webp
+    image: "assets/services/okna.webp" as string | null, // AI-ілюстрація (не фото робіт)
   },
   {
     id: "biura",
     title: "Biura i lokale",
     lead: "Czyste miejsce pracy dla zespołu i klientów.",
     tone: "dark",
-    image: null as string | null, // TODO: assets/service-<id>.webp
+    image: "assets/services/biura.webp" as string | null, // AI-ілюстрація (не фото робіт)
   },
   {
     id: "generalne",
     title: "Sprzątanie generalne",
     lead: "Gruntowne sprzątanie od podłogi po sufit.",
     tone: "light",
-    image: null as string | null, // TODO: assets/service-<id>.webp
+    image: "assets/services/generalne.webp" as string | null, // AI-ілюстрація (не фото робіт)
   },
 ] as const;
 

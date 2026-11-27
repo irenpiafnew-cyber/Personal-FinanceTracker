@@ -53,8 +53,8 @@ export function Services({ onPick }: { onPick: (id: ServiceId) => void }) {
                 )}
                 <span
                   aria-hidden="true"
-                  className={`absolute inset-x-0 bottom-0 h-1/2 ${
-                    s.tone === "dark" ? "bg-gradient-to-t from-ink/80" : s.tone === "yellow" ? "bg-gradient-to-t from-sun/90" : "bg-gradient-to-t from-white/85"
+                  className={`absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t ${
+                    s.tone === "dark" ? "from-ink/95 via-ink/70" : s.tone === "yellow" ? "from-sun via-sun/80" : "from-white/95 via-white/75"
                   } to-transparent`}
                 />
                 <span className="relative">
