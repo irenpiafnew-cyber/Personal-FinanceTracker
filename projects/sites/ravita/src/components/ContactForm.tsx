@@ -3,6 +3,7 @@ import { GALLERY_PHOTOS, SERVICES, type ServiceId } from "../content/pl";
 import { useReveal } from "../hooks/useMotion";
 import { countsWindows, todayISO, validate, type Errors, type OrderForm } from "../lib/validation";
 import { CallButton } from "./Call";
+import { LEADS_ENABLED, sendLead } from "../lib/leads";
 import { ArrowRight } from "./Logo";
 
 type Props = {
@@ -12,21 +13,25 @@ type Props = {
 };
 
 /**
- * ДЕМО-РЕЖИМ: дані нікуди не надсилаються і не зберігаються (ні fetch, ні localStorage).
- * Для запуску — підключити бекенд (напр. Vercel Function + email) і повну політику RODO.
+ * Два режими:
+ * - демо (LEADS_ENABLED = false): дані нікуди не надсилаються і не зберігаються;
+ * - робочий: заявка йде на /api/lead → e-mail компанії (див. api/lead.ts).
  */
 export function ContactForm({ form, setForm, onPrivacy }: Props) {
   const ref = useReveal<HTMLElement>();
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [honeypot, setHoneypot] = useState(""); // пастка для ботів, людина поля не бачить
+  const sent = status === "sent";
 
   const set = <K extends keyof OrderForm>(k: K, v: OrderForm[K]) => {
     setForm((f) => ({ ...f, [k]: v }));
     if (errors[k]) setErrors((e) => ({ ...e, [k]: undefined }));
   };
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (status === "sending") return;
     const errs = validate(form);
     setErrors(errs);
     const first = Object.keys(errs)[0];
@@ -34,7 +39,16 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
       e.currentTarget.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    setSent(true);
+    if (LEADS_ENABLED) {
+      setStatus("sending");
+      try {
+        await sendLead(form, honeypot);
+      } catch {
+        setStatus("error"); // дані лишаються у формі — можна спробувати ще раз
+        return;
+      }
+    }
+    setStatus("sent");
     setForm((f) => ({ ...f, phone: "", notes: "", consent: false })); // персональні дані одразу стираємо
   };
 
@@ -53,9 +67,11 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
           <p className="mt-5 max-w-md text-ink-soft">
             Wypełnij formularz — skontaktujemy się, aby potwierdzić zakres prac, termin i cenę.
           </p>
-          <div className="mt-8 rounded-[1.2rem] border border-ink/10 bg-white p-5 text-sm text-ink-soft">
-            <strong className="text-ink">Tryb demonstracyjny.</strong> Formularz sprawdza poprawność danych, ale niczego nie wysyła ani nie zapisuje.
-          </div>
+          {!LEADS_ENABLED && (
+            <div className="mt-8 rounded-[1.2rem] border border-ink/10 bg-white p-5 text-sm text-ink-soft">
+              <strong className="text-ink">Tryb demonstracyjny.</strong> Formularz sprawdza poprawność danych, ale niczego nie wysyła ani nie zapisuje.
+            </div>
+          )}
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <p className="font-semibold">Wolisz porozmawiać?</p>
             <CallButton className="btn-ghost bg-white" />
@@ -68,12 +84,14 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-sun text-3xl">✓</div>
               <h3 className="mt-6 text-2xl font-extrabold tracking-[-0.03em]">Dziękujemy!</h3>
               <p className="mx-auto mt-3 max-w-sm text-ink-soft">
-                To wersja demonstracyjna — dane nie zostały wysłane ani zapisane. W wersji produkcyjnej w tym miejscu klient otrzyma potwierdzenie zgłoszenia.
+                {LEADS_ENABLED
+                  ? "Otrzymaliśmy Twoje zapytanie. Oddzwonimy, aby potwierdzić zakres prac, termin i cenę."
+                  : "To wersja demonstracyjna — dane nie zostały wysłane ani zapisane. W wersji produkcyjnej w tym miejscu klient otrzyma potwierdzenie zgłoszenia."}
               </p>
-              <button type="button" className="btn-ghost mt-8" onClick={() => setSent(false)}>Wypełnij ponownie</button>
+              <button type="button" className="btn-ghost mt-8" onClick={() => setStatus("idle")}>Wypełnij ponownie</button>
             </div>
           ) : (
-            <form onSubmit={submit} noValidate className="grid gap-5 sm:grid-cols-2">
+            <form onSubmit={submit} noValidate className="relative grid gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <label htmlFor="f-service" className="label">Rodzaj usługi</label>
                 <select id="f-service" name="service" className="field" value={form.service} onChange={(e) => set("service", e.target.value as ServiceId)} {...err("service")}>
@@ -131,8 +149,19 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
                 </label>
                 {msg("consent")}
               </div>
-              <button type="submit" className="btn-sun sm:col-span-2">
-                Wyślij zapytanie <ArrowRight />
+              {/* Пастка для ботів: прихована від людей і скрінрідерів */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                <label htmlFor="f-company">Firma</label>
+                <input id="f-company" name="company" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
+              {status === "error" && (
+                <div role="alert" className="rounded-xl border border-[#b42318]/30 bg-[#fef3f2] p-4 text-sm text-[#7a1a12] sm:col-span-2">
+                  <strong>Nie udało się wysłać zapytania.</strong> Sprawdź połączenie i spróbuj ponownie albo zadzwoń do nas.
+                  <div className="mt-3"><CallButton className="btn-ghost min-h-11! bg-white" /></div>
+                </div>
+              )}
+              <button type="submit" className="btn-sun disabled:opacity-60 sm:col-span-2" disabled={status === "sending"} aria-busy={status === "sending"}>
+                {status === "sending" ? "Wysyłanie…" : <>Wyślij zapytanie <ArrowRight /></>}
               </button>
             </form>
           )}

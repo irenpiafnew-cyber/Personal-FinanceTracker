@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { GALLERY_PHOTOS, STEPS } from "../content/pl";
 import { useReveal } from "../hooks/useMotion";
+import { LEADS_ENABLED } from "../lib/leads";
 import { ArrowUpRight, Asterisk, Logo } from "./Logo";
 
 const Title = ({ n, eyebrow, children, id, light }: { n: string; eyebrow: string; children: React.ReactNode; id?: string; light?: boolean }) => (
@@ -155,12 +156,25 @@ export function PrivacyDialog({ dialogRef }: { dialogRef: React.RefObject<HTMLDi
     >
       <div className="p-7 sm:p-9">
         <h2 id="privacy-title" className="text-2xl font-extrabold tracking-[-0.03em]">Polityka prywatności<span className="dot">.</span></h2>
-        <p className="mt-4 text-ink-soft">
-          To jest wersja demonstracyjna strony. Formularze nie wysyłają ani nie zapisują żadnych danych osobowych — wszystko zostaje w Twojej przeglądarce i znika po odświeżeniu strony.
-        </p>
-        <p className="mt-3 text-ink-soft">
-          Pełna polityka prywatności (RODO) zostanie przygotowana przed uruchomieniem strony produkcyjnej. Strona nie używa plików cookie ani narzędzi analitycznych.
-        </p>
+        {LEADS_ENABLED ? (
+          <>
+            <p className="mt-4 text-ink-soft">
+              Dane z formularza (usługa, zakres prac, miejscowość, numer telefonu, termin i uwagi) wysyłamy e-mailem do firmy Ravita wyłącznie po to, aby przygotować wycenę i skontaktować się z Tobą. Strona nie zapisuje ich w żadnej bazie danych.
+            </p>
+            <p className="mt-3 text-ink-soft">
+              Do wysyłki wiadomości używamy usługi Resend. Masz prawo do dostępu do swoich danych, ich poprawienia i usunięcia — skontaktuj się z nami. Strona nie używa plików cookie ani narzędzi analitycznych.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="mt-4 text-ink-soft">
+              To jest wersja demonstracyjna strony. Formularze nie wysyłają ani nie zapisują żadnych danych osobowych — wszystko zostaje w Twojej przeglądarce i znika po odświeżeniu strony.
+            </p>
+            <p className="mt-3 text-ink-soft">
+              Pełna polityka prywatności (RODO) zostanie przygotowana przed uruchomieniem strony produkcyjnej. Strona nie używa plików cookie ani narzędzi analitycznych.
+            </p>
+          </>
+        )}
         <form method="dialog" className="mt-6">
           <button className="btn-sun">Rozumiem</button>
         </form>
