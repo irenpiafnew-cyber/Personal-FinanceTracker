@@ -6,6 +6,7 @@ import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
 import { About, DemoBadge, Footer, Gallery, HowItWorks, PrivacyDialog, Pricing } from "./components/Sections";
 import { Services } from "./components/Services";
+import { MobileActionBar } from "./components/Call";
 import type { ServiceId } from "./content/pl";
 import { EMPTY_FORM, type OrderForm } from "./lib/validation";
 
@@ -24,8 +25,8 @@ export default function App() {
     window.setTimeout(() => document.getElementById(focusId)?.focus({ preventScroll: true }), 650);
   };
 
-  const onQuote = (service: ServiceId, area: string) => {
-    setForm((f) => ({ ...f, service, area }));
+  const onQuote = (patch: Partial<OrderForm>) => {
+    setForm((f) => ({ ...f, ...patch }));
     goToContact("f-city");
   };
 
@@ -49,6 +50,7 @@ export default function App() {
       <Footer onPrivacy={openPrivacy} />
       <PrivacyDialog dialogRef={privacyRef} />
       <DemoBadge />
+      <MobileActionBar />
     </>
   );
 }

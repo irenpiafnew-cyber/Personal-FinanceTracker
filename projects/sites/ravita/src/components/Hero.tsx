@@ -1,4 +1,4 @@
-import type { ServiceId } from "../content/pl";
+import type { OrderForm } from "../lib/validation";
 import { HeroGlove } from "./HeroGlove";
 import { QuickQuote } from "./QuickQuote";
 
@@ -6,7 +6,7 @@ import { QuickQuote } from "./QuickQuote";
  * Шари (знизу вгору): білий фон → текст і «ravita.» → рукавичка → краплі/бульбашки → форма.
  * На desktop рукавичка й форма позиціонуються абсолютно, на телефоні — йдуть потоком.
  */
-export function Hero({ onQuote }: { onQuote: (s: ServiceId, area: string) => void }) {
+export function Hero({ onQuote }: { onQuote: (patch: Partial<OrderForm>) => void }) {
   return (
     <section id="top" className="relative isolate overflow-hidden bg-white pt-24 lg:pt-28">
       {/* м'який сірий відблиск, як світло в студії */}

@@ -119,7 +119,7 @@ export function Gallery() {
 export function Footer({ onPrivacy }: { onPrivacy: () => void }) {
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-8 lg:px-14">
+      <div className="mx-auto max-w-[1440px] px-4 pb-28 pt-14 sm:px-8 md:pb-14 lg:px-14">
         <div className="flex flex-col justify-between gap-10 md:flex-row">
           <div>
             <Logo className="text-white [&_span]:text-white" />
@@ -171,7 +171,7 @@ export function PrivacyDialog({ dialogRef }: { dialogRef: React.RefObject<HTMLDi
 
 export function DemoBadge() {
   return (
-    <p className="pointer-events-none fixed bottom-3 left-3 z-40 rounded-full bg-ink/85 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-white backdrop-blur">
+    <p className="pointer-events-none fixed bottom-3 left-3 z-40 hidden md:block rounded-full bg-ink/85 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-white backdrop-blur">
       Demo · MolfarWeb
     </p>
   );

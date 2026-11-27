@@ -3,6 +3,9 @@ import type { ServiceId } from "../content/pl";
 export type OrderForm = {
   service: ServiceId | "";
   area: string;
+  /** Для «Mycie okien»: кількість вікон і (опційно) балконних/терасних дверей */
+  windows: string;
+  balconyDoors: string;
   city: string;
   phone: string;
   date: string;
@@ -15,6 +18,8 @@ export type Errors = Partial<Record<keyof OrderForm, string>>;
 export const EMPTY_FORM: OrderForm = {
   service: "domy",
   area: "60",
+  windows: "",
+  balconyDoors: "",
   city: "",
   phone: "",
   date: "",
@@ -40,11 +45,33 @@ export function validateArea(area: string): string | undefined {
   if (!Number.isFinite(n) || n < 5 || n > 5000) return "Podaj wartość od 5 do 5000 m².";
 }
 
+/** Для миття вікон людина знає кількість вікон, а не їхню площу */
+export const countsWindows = (service: OrderForm["service"]) => service === "okna";
+
+const isInt = (v: string) => /^\d+$/.test(v.trim());
+
+export function validateWindows(v: string): string | undefined {
+  if (!v.trim()) return "Podaj liczbę okien.";
+  if (!isInt(v) || +v < 1 || +v > 100) return "Podaj liczbę od 1 do 100.";
+}
+
+export function validateDoors(v: string): string | undefined {
+  if (!v.trim()) return;
+  if (!isInt(v) || +v > 20) return "Podaj liczbę od 0 do 20.";
+}
+
 export function validate(f: OrderForm): Errors {
   const e: Errors = {};
   if (!f.service) e.service = "Wybierz rodzaj usługi.";
-  const a = validateArea(f.area);
-  if (a) e.area = a;
+  if (countsWindows(f.service)) {
+    const w = validateWindows(f.windows);
+    if (w) e.windows = w;
+    const d = validateDoors(f.balconyDoors);
+    if (d) e.balconyDoors = d;
+  } else {
+    const a = validateArea(f.area);
+    if (a) e.area = a;
+  }
   if (f.city.trim().length < 2) e.city = "Podaj miejscowość.";
   if (!isPolishPhone(f.phone)) e.phone = "Podaj poprawny numer, np. 600 123 456.";
   if (!f.date) e.date = "Wybierz preferowany termin.";

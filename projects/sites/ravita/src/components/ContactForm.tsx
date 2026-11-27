@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { GALLERY_PHOTOS, SERVICES, type ServiceId } from "../content/pl";
 import { useReveal } from "../hooks/useMotion";
-import { todayISO, validate, type Errors, type OrderForm } from "../lib/validation";
+import { countsWindows, todayISO, validate, type Errors, type OrderForm } from "../lib/validation";
+import { CallButton } from "./Call";
 import { ArrowRight } from "./Logo";
 
 type Props = {
@@ -55,6 +56,10 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
           <div className="mt-8 rounded-[1.2rem] border border-ink/10 bg-white p-5 text-sm text-ink-soft">
             <strong className="text-ink">Tryb demonstracyjny.</strong> Formularz sprawdza poprawność danych, ale niczego nie wysyła ani nie zapisuje.
           </div>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <p className="font-semibold">Wolisz porozmawiać?</p>
+            <CallButton className="btn-ghost bg-white" />
+          </div>
         </div>
 
         <div className="reveal rounded-[1.6rem] bg-white p-6 shadow-[0_30px_60px_-36px_rgb(32_43_54/0.35)] sm:p-9" style={{ "--delay": "120ms" } as React.CSSProperties}>
@@ -76,11 +81,26 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
                 </select>
                 {msg("service")}
               </div>
-              <div>
-                <label htmlFor="f-area" className="label">Powierzchnia (m²)</label>
-                <input id="f-area" name="area" inputMode="decimal" className="field" value={form.area} onChange={(e) => set("area", e.target.value)} {...err("area")} />
-                {msg("area")}
-              </div>
+              {countsWindows(form.service) ? (
+                <>
+                  <div>
+                    <label htmlFor="f-windows" className="label">Ile okien jest do umycia?</label>
+                    <input id="f-windows" name="windows" inputMode="numeric" className="field" placeholder="np. 6" value={form.windows} onChange={(e) => set("windows", e.target.value)} {...err("windows")} />
+                    {msg("windows")}
+                  </div>
+                  <div>
+                    <label htmlFor="f-doors" className="label">Drzwi balkonowe lub tarasowe <span className="font-normal text-ink-soft">(opcjonalnie)</span></label>
+                    <input id="f-doors" name="balconyDoors" inputMode="numeric" className="field" placeholder="np. 1" value={form.balconyDoors} onChange={(e) => set("balconyDoors", e.target.value)} {...err("balconyDoors")} />
+                    {msg("balconyDoors")}
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <label htmlFor="f-area" className="label">Powierzchnia (m²)</label>
+                  <input id="f-area" name="area" inputMode="decimal" className="field" value={form.area} onChange={(e) => set("area", e.target.value)} {...err("area")} />
+                  {msg("area")}
+                </div>
+              )}
               <div>
                 <label htmlFor="f-city" className="label">Miejscowość</label>
                 <input id="f-city" name="city" autoComplete="address-level2" className="field" placeholder="np. Racibórz" value={form.city} onChange={(e) => set("city", e.target.value)} {...err("city")} />
@@ -91,7 +111,7 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
                 <input id="f-phone" name="phone" type="tel" autoComplete="tel" className="field" placeholder="600 123 456" value={form.phone} onChange={(e) => set("phone", e.target.value)} {...err("phone")} />
                 {msg("phone")}
               </div>
-              <div>
+              <div className={countsWindows(form.service) ? "sm:col-span-2" : ""}>
                 <label htmlFor="f-date" className="label">Preferowany termin</label>
                 <input id="f-date" name="date" type="date" min={todayISO()} className="field" value={form.date} onChange={(e) => set("date", e.target.value)} {...err("date")} />
                 {msg("date")}

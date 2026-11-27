@@ -53,3 +53,7 @@ export const NAV = [
 // Галерея: ТІЛЬКИ реальні фото робіт Ravita (не AI). Поки масив порожній — секція прихована.
 // Приклад: { src: "assets/gallery/kuchnia-po.webp", alt: "Kuchnia po sprzątaniu generalnym" }
 export const GALLERY_PHOTOS: { src: string; alt: string }[] = [];
+
+// Телефон компанії: null, доки компанія не підтвердить номер (НЕ вигадувати — випадковий номер може належати реальній людині).
+// Формат: phone — для посилання tel:, display — як показати людям. Приклад: { phone: "+48600123456", display: "600 123 456" }
+export const CONTACT: { phone: string; display: string } | null = null;
