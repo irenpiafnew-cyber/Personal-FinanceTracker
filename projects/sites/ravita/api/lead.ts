@@ -10,8 +10,8 @@
  *
  * Персональні дані не логуються і ніде не зберігаються — тільки пересилаються листом.
  */
-import { SERVICES, type ServiceId } from "../src/content/pl";
-import { countsWindows, validate, type OrderForm } from "../src/lib/validation";
+import { SERVICES, type ServiceId } from "../src/content/pl.js";
+import { countsWindows, validate, type OrderForm } from "../src/lib/validation.js";
 
 const MAX_BODY = 10_000;
 const DEFAULT_FROM = "Ravita <onboarding@resend.dev>";
