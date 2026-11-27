@@ -16,12 +16,10 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "types": [
-      "vite/client",
-      "node"
+      "vite/client"
     ]
   },
   "include": [
-    "src",
-    "api"
+    "src"
   ]
 }
