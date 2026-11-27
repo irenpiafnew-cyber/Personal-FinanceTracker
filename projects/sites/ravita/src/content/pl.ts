@@ -49,3 +49,7 @@ export const NAV = [
   { href: "#cennik", label: "Cennik" },
   { href: "#kontakt", label: "Kontakt" },
 ];
+
+// Галерея: ТІЛЬКИ реальні фото робіт Ravita (не AI). Поки масив порожній — секція прихована.
+// Приклад: { src: "assets/gallery/kuchnia-po.webp", alt: "Kuchnia po sprzątaniu generalnym" }
+export const GALLERY_PHOTOS: { src: string; alt: string }[] = [];

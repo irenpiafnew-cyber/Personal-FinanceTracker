@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { SERVICES, type ServiceId } from "../content/pl";
+import { GALLERY_PHOTOS, SERVICES, type ServiceId } from "../content/pl";
 import { useReveal } from "../hooks/useMotion";
 import { todayISO, validate, type Errors, type OrderForm } from "../lib/validation";
 import { ArrowRight } from "./Logo";
@@ -45,7 +45,7 @@ export function ContactForm({ form, setForm, onPrivacy }: Props) {
     <section id="kontakt" ref={ref} className="scroll-mt-20 bg-mist py-20 lg:py-28" aria-labelledby="contact-title">
       <div className="mx-auto grid max-w-[1440px] gap-12 px-4 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-14">
         <div className="reveal">
-          <p className="eyebrow">07 / Kontakt</p>
+          <p className="eyebrow">{GALLERY_PHOTOS.length ? "07" : "06"} / Kontakt</p>
           <h2 id="contact-title" className="mt-4 text-[clamp(2.2rem,4vw,3.4rem)] font-extrabold leading-[1.02] tracking-[-0.04em]">
             Zapytaj o wycenę<span className="dot">.</span>
           </h2>

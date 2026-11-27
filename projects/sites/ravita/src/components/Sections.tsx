@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { STEPS } from "../content/pl";
+import { GALLERY_PHOTOS, STEPS } from "../content/pl";
 import { useReveal } from "../hooks/useMotion";
 import { ArrowUpRight, Asterisk, Logo } from "./Logo";
 
@@ -98,19 +98,20 @@ export function Pricing() {
   );
 }
 
-/** Галерея: лише реальні фото від компанії. Поки їх немає — чесна заглушка. */
+/** Галерея: лише реальні фото від компанії. Поки їх немає — секція не показується зовсім. */
 export function Gallery() {
   const ref = useReveal<HTMLElement>();
+  if (GALLERY_PHOTOS.length === 0) return null;
   return (
     <section ref={ref} className="mx-auto max-w-[1440px] px-4 pb-20 sm:px-8 lg:px-14 lg:pb-28" aria-labelledby="gallery-title">
       <Title n="06" eyebrow="Realizacje" id="gallery-title">Nasze prace</Title>
-      <div className="reveal mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className={`grid place-items-center rounded-[1.4rem] border-2 border-dashed border-ink/15 bg-mist ${i === 0 ? "col-span-2 row-span-2 aspect-square lg:aspect-auto" : "aspect-square"}`}>
-            <span className="px-4 text-center text-sm font-semibold text-ink-soft">{i === 0 ? "Wkrótce: zdjęcia z prawdziwych realizacji Ravita" : "Miejsce na zdjęcie"}</span>
-          </div>
+      <ul className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {GALLERY_PHOTOS.map((p, i) => (
+          <li key={p.src} className={`reveal overflow-hidden rounded-[1.4rem] bg-mist ${i === 0 ? "col-span-2 row-span-2" : ""}`} style={{ "--delay": `${i * 80}ms` } as CSSProperties}>
+            <img src={p.src} alt={p.alt} loading="lazy" className="h-full w-full object-cover" />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
